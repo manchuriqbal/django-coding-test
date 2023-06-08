@@ -19,6 +19,11 @@ class Product(TimeStampMixin):
 
     def __str__(self) -> str:
         return self.title
+    
+    @property
+    def created(self):
+        return self.created_at.strftime('%d-%b-%Y')
+    
     class Meta:
         ordering= ["title"]
 
@@ -31,7 +36,10 @@ class ProductImage(TimeStampMixin):
 class ProductVariant(TimeStampMixin):
     variant_title = models.CharField(max_length=255)
     variant = models.ForeignKey(Variant, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)\
+    
+    def __str__(self) -> str:
+        return self.variant_title
 
 
 class ProductVariantPrice(TimeStampMixin):
@@ -44,3 +52,7 @@ class ProductVariantPrice(TimeStampMixin):
     price = models.FloatField()
     stock = models.FloatField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    
+    def __str__(self) -> str:
+        return f"{self.product} - {self.price}"
+    
