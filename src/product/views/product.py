@@ -11,26 +11,6 @@ from product.models import Variant, Product, ProductVariant
 from django.http import JsonResponse
 import json 
 
-# from rest_framework.generics import CreateAPIView
-# from rest_framework import status
-# from rest_framework.response import Response
-# from ..serializer import ProductSerializer
-
-
-
-# class ProductListCreateView(CreateAPIView):
-#     queryset = Product.objects.all()  # Queryset for listing products
-#     serializer_class = ProductSerializer  # Replace with your product serializer
-
-#     def create(self, request, *args, **kwargs):
-#         # Handle product creation logic here
-#         serializer = self.get_serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
 
 class CreateProductView(generic.TemplateView):
     template_name = 'products/create.html'
