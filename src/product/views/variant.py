@@ -2,7 +2,7 @@ from django.views import generic
 from django.views.generic import ListView, CreateView, UpdateView
 
 from product.forms import VariantForm
-from product.models import Variant
+from product.models import Variant, ProductVariant, ProductVariantPrice
 
 
 class BaseVariantView(generic.View):
@@ -18,7 +18,6 @@ class VariantView(BaseVariantView, ListView):
 
     def get_queryset(self):
         filter_string = {}
-        print(self.request.GET)
         for key in self.request.GET:
             if self.request.GET.get(key):
                 filter_string[key] = self.request.GET.get(key)
@@ -28,9 +27,15 @@ class VariantView(BaseVariantView, ListView):
         context = super().get_context_data(**kwargs)
         context['product'] = True
         context['request'] = ''
+
         if self.request.GET:
-            context['request'] = self.request.GET['title__icontains']
+            context['request'] = self.request.GET.get('title__icontains')
+
+        context['product_list'] = self.get_queryset()
+
+
         return context
+
 
 
 class VariantCreateView(BaseVariantView, CreateView):
